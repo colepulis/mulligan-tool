@@ -27,25 +27,29 @@ class deck:
 		
 	# function to draw an opening hand of 7 cards and then make basic mulligan decisions based on num of lands	
 	def draw_opening_hand(draw):
-		
 		good_lands_in_hand = 0
 		lands_in_hand = 0
 		cards_in_hand = 0
+		mulligan_counter = 0
 		#no mulligan
-		while cards_in_hand < 7: 
+		while cards_in_hand < 7 and mulligan_counter < 4: 
 			card_type = draw()
 			if card_type < 3:
 				if card_type == 1:
 					good_lands_in_hand += 1
 				lands_in_hand += 1
 				cards_in_hand += 1
-			if card_type == 3:
+			elif card_type == 3:
 				cards_in_hand += 1
-			print (lands_in_hand, cards_in_hand)
-		if 2 < lands_in_hand < 6:
-			print("Keep")
-		else: 
-			print("mulligan")
+			if cards_in_hand == 7:
+				if 2 < lands_in_hand < 6 or mulligan_counter == 3:
+					print("Keep", lands_in_hand, cards_in_hand, mulligan_counter)
+				else: 
+					mulligan_counter += 1
+					cards_in_hand = 0
+					lands_in_hand = 0
+					good_lands_in_hand = 0
+				
 				
 	draw_opening_hand(draw_card)
 	
